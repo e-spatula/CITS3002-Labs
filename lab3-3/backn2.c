@@ -157,6 +157,7 @@ EVENT_HANDLER(timeouts) {
 	printf("timeout seq=%ld\n", data);
 	int sending_index = data % WINDOW_SIZE;
 	MSG *msgptr = sending_window[sending_index];
+	printf("Sending window index=%d\n", sending_index);
 	transmit_frame(msgptr, lastlength, data);
 }
 
