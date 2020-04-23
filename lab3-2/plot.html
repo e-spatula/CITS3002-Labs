@@ -1,0 +1,50 @@
+<html>
+<head>
+  <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+  <script type='text/javascript'>
+    google.load('visualization', '1.1', {packages: ['line']});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var options = {
+        chart: {
+          title: 'Messages delivered in 1 hour'
+        },
+        width:  600,
+        height: 400
+      };
+      var chart = new google.charts.Line(document.getElementById('linechart_material'));
+      var data = new google.visualization.DataTable();
+data.addColumn('number', 'seconds');
+data.addColumn('number', 'STOPANDWAIT');
+data.addColumn('number', 'BACKN');
+data.addRows([
+[10, 1, 2],
+[20, 3, 3],
+[30, 4, 5],
+[40, 5, 6],
+[50, 5, 7],
+[60, 6, 7],
+[70, 6, 7],
+[80, 7, 9],
+[90, 7, 9],
+[100, 8, 12],
+[110, 9, 12],
+[120, 10, 15],
+[130, 11, 15],
+[140, 12, 16],
+[150, 13, 16],
+[160, 13, 16],
+[170, 13, 16],
+[180, 14, 16],
+[190, 15, 16],
+[200, 16, 16],
+]);
+      chart.draw(data, options);
+    }
+  </script>
+</head>
+<body>
+  <div id='linechart_material'></div>
+</body>
+</html>

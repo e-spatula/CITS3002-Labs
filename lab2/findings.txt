@@ -1,0 +1,5 @@
+For a 30 second interval in STOPANDWAIT1 we observe 4 messages generated and 3 received, with 0 messages lost to corruption.
+
+For a 40 second interval in STOPANDWAIT2 we observe 13 frames transmitted, 12 received and 1 corrupted. 
+
+For a 50 second interval in STOPANDWAIT3 we observe 11 frames transmitted, 11 received and 1 lost. 

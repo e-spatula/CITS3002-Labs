@@ -1,0 +1,29 @@
+//  THIS TOPOLOGY FILE NOW INTRODUCES FRAME LOSS
+
+compile			= "stopandwait.c"
+
+messagerate             = 100ms,
+bandwidth               = 56Kbps,
+propagationdelay        = 2500ms,
+
+//  FRAME LOSS WILL BE INTRODUCED AT THE RATE OF 1:8  (1:2^3)
+probframeloss		= 3
+probframecorrupt	= 3
+
+host Perth {
+    x=50 y=50
+    winx=0, winy=50
+
+    link to Melbourne {
+    }
+}
+
+host Melbourne {
+    x=400 y=50
+    winx=550, winy=50
+    east east east of Perth
+
+    link to Perth {
+
+    }
+}
