@@ -6,7 +6,7 @@
 #define SIFS_UNUSED -1
 #define ACK_TIMER EV_TIMER1
 #define TIMEOUT_TIMER EV_TIMER2
-#define WINDOW_SIZE 2
+#define WINDOW_SIZE 3
 
 typedef struct {
 	char data[MAX_MESSAGE_SIZE];
@@ -29,6 +29,7 @@ size_t lastlength = 0;
 CnetTimerID timeout_timers[WINDOW_SIZE];
 CnetTimerID ack_timer = NULLTIMER;
 MSG *sending_window[WINDOW_SIZE];
+size_t msg_lengths[WINDOW_SIZE];
 
 int ackexpected  = 0; // next acknowledgement expected
 int nextframetosend = 0; // seqno of the next frame to send
@@ -82,6 +83,7 @@ EVENT_HANDLER(application_ready) {
 	free(sending_window[sending_index]);
 	sending_window[sending_index] = malloc(lastlength);
 	memcpy(sending_window[sending_index], lastmsg, lastlength);
+	msg_lengths[sending_index] = lastlength;
 	transmit_frame(lastmsg, lastlength, nextframetosend);
 	
 	nextframetosend++;
@@ -154,11 +156,14 @@ EVENT_HANDLER(physical_ready) {
 }
 
 EVENT_HANDLER(timeouts) {
-	printf("timeout seq=%ld\n", data);
-	int sending_index = data % WINDOW_SIZE;
+	int int_data = (int) data;
+	printf("timeout seq=%d\n", int_data);
+	int sending_index = int_data % WINDOW_SIZE;
 	MSG *msgptr = sending_window[sending_index];
+	size_t length = msg_lengths[sending_index];
+
 	printf("Sending window index=%d\n", sending_index);
-	transmit_frame(msgptr, lastlength, data);
+	transmit_frame(msgptr, length, int_data);
 }
 
 EVENT_HANDLER(ack_timeouts) {
