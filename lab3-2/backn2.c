@@ -124,7 +124,7 @@ EVENT_HANDLER(physical_ready) {
 				CNET_stop_timer(timeout_timers[i]);
 			}
 			ackexpected = f.ackno + 1;
-			// If last batch of messages have been acknowledged, restart app layer
+			// restart app layer if there is space in the buffer
 			if((nextframetosend - ackexpected) < WINDOW_SIZE) {
 				printf("\n Enabling application layer\n");
 				CNET_enable_application(ALLNODES);
