@@ -125,7 +125,7 @@ EVENT_HANDLER(physical_ready) {
 			}
 			ackexpected = f.ackno + 1;
 			// If last batch of messages have been acknowledged, restart app layer
-			if((nextframetosend - ackexpected) == 0) {
+			if((nextframetosend - ackexpected) < WINDOW_SIZE) {
 				printf("\n Enabling application layer\n");
 				CNET_enable_application(ALLNODES);
 			}
